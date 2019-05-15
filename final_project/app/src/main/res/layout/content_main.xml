@@ -29,23 +29,27 @@
     <Button
         android:id="@+id/choose_file"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:onClick="choose_file"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+
+        android:layout_marginStart="8dp"
         android:text="@string/choose"
         app:layout_constraintBottom_toBottomOf="@+id/file_name"
         app:layout_constraintStart_toStartOf="@+id/file_name"
-        app:layout_constraintTop_toTopOf="@+id/file_name" />
+        app:layout_constraintTop_toTopOf="@+id/file_name"
+        app:layout_constraintVertical_bias="0.666" />
 
     <TextView
         android:id="@+id/file_name"
         android:layout_width="250dp"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         android:background="#FFFFFF"
         android:text="@string/file_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intro" />
 
@@ -59,13 +63,26 @@
         android:layout_marginBottom="8dp"
         android:background="#FF3333"
         android:drawableLeft="@android:drawable/ic_menu_search"
+        android:onClick="start"
         android:text="@string/start"
         android:textColor="#FFFFFF"
-        android:onClick="start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/file_name"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintVertical_bias="0.042" />
+
+    <ImageView
+        android:id="@+id/choose_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start" />
+
 </android.support.constraint.ConstraintLayout>
