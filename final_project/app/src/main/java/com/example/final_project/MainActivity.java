@@ -113,17 +113,20 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView mtext = findViewById(R.id.file_name);
 
+                String path;
+                int find;
 
+                find = uri.getPath().lastIndexOf('/');
+                path = uri.getPath().substring(find+1,uri.getPath().length());
+                Log.d("path", path);
 
-                Log.d("path", uri.getPath().toString());
-
-                String path = "圖片路徑";
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeFile(path, options);
-                String type = options.outMimeType;
+//                String path = "圖片路徑";
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inJustDecodeBounds = true;
+//                BitmapFactory.decodeFile(path, options);
+//                String type = options.outMimeType;
 //                Log.d("image type -> ", type.toString());
-                mtext.setText("\n"+"                              "+type);
+                 mtext.setText("\n"+"                              "+path);
 
 //                String[] proj = {MediaStore.Images.Media.DATA};
 //                CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
@@ -163,9 +166,8 @@ public class MainActivity extends AppCompatActivity {
         Intent newAct = new Intent();
         newAct.setClass( this, Main2Activity.class );
 
-        startActivity( newAct );
+        startActivity(newAct);
 
-
-        this.finish();
+//        this.finish();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -134,10 +136,12 @@ public class Main2Activity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
 //            public TextView mTextView;
             public ImageView face;
+            public ImageButton imgbtn;
             public ViewHolder(View v) {
                 super(v);
 //                mTextView = (TextView) v.findViewById(R.id.info_text);
                 face  = (ImageView)v.findViewById(R.id.img);
+                imgbtn = (ImageButton)v.findViewById(R.id.imageButton);
             }
         }
 
@@ -150,6 +154,7 @@ public class Main2Activity extends AppCompatActivity {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item, parent, false);
             ViewHolder vh = new ViewHolder(v);
+
             return vh;
         }
 
@@ -158,6 +163,18 @@ public class Main2Activity extends AppCompatActivity {
 //            holder.mTextView.setText(mData.get(position));
 
             holder.face.setImageResource(Integer.valueOf(mData.get(position)));
+            holder.imgbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("123","888");
+                    Intent newAct = new Intent();
+                    newAct.setClass( Main2Activity.this, Main3Activity.class );
+
+                    startActivity(newAct);
+
+//                    Main2Activity.this.finish();
+                }
+            });
 
 
         }

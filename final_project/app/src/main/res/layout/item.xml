@@ -29,7 +29,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right|center_vertical"
-        android:background="#FFFFFF"
+        android:background="#00000000"
         card_view:srcCompat="@drawable/ic_chevron_right_black_24dp"
         android:scaleType="centerInside"
         android:layout_marginStart="8dp"
