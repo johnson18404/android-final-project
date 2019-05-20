@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Main3Activity extends AppCompatActivity {
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
     private String[] name = {"小王1","小王2","小王3","小王4"};
     private double[] ratio = {18.24,15.26,11.48,10.55};
+    private SeekBar seekbar;
 
 
     @Override
@@ -34,6 +36,25 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        seekbar = (SeekBar) findViewById(R.id.seekBar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                               @Override
+                                               public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                                               }
+
+                                               @Override
+                                               public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                               }
+
+                                               @Override
+                                               public void onStopTrackingTouch(SeekBar seekBar) {
+                                                   Log.d("now",Integer.toString(value));
+
+                                               }
+                                           });
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
