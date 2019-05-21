@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView intro = (TextView) findViewById(R.id.intro);
         SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
-        spannable.setSpan(new AbsoluteSizeSpan(40), 15, 84, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new AbsoluteSizeSpan(40), 16, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         intro.setText(spannable);
 

@@ -46,11 +46,15 @@
 
             <SeekBar
                 android:id="@+id/seekBar"
+                android:progressDrawable="@drawable/seekbar_color"
+                android:thumb="@drawable/ic_face_black_24dp"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="48dp"
                 android:layout_marginRight="48dp"
+                android:max="6"
                 app:layout_constraintTop_toBottomOf="@+id/img1" />
 
             <android.support.v7.widget.RecyclerView

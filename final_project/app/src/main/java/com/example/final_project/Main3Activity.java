@@ -38,9 +38,11 @@ public class Main3Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
+        seekbar.setProgress(3);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                                @Override
                                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                   Log.d("now",Integer.toString(progress));
 
                                                }
 
@@ -51,7 +53,7 @@ public class Main3Activity extends AppCompatActivity {
 
                                                @Override
                                                public void onStopTrackingTouch(SeekBar seekBar) {
-                                                   Log.d("now",Integer.toString(value));
+
 
                                                }
                                            });

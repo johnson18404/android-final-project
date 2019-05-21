@@ -5,7 +5,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="0dp"
+    card_view:cardCornerRadius="6dp"
     android:layout_margin="1dp">
 
     <LinearLayout
@@ -29,7 +29,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right|center_vertical"
-        android:background="#00000000"
+        android:background="@drawable/face_btn"
         card_view:srcCompat="@drawable/ic_chevron_right_black_24dp"
         android:scaleType="centerInside"
         android:layout_marginStart="8dp"
