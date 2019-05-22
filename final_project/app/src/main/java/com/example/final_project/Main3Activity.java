@@ -36,6 +36,7 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         seekbar.setProgress(3);

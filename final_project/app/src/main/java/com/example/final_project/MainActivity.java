@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         TextView intro = (TextView) findViewById(R.id.intro);
         SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
         spannable.setSpan(new AbsoluteSizeSpan(40), 16, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 //                BitmapFactory.decodeFile(path, options);
 //                String type = options.outMimeType;
 //                Log.d("image type -> ", type.toString());
-                 mtext.setText("\n"+"                              "+path);
+                 mtext.setText(path);
 
 //                String[] proj = {MediaStore.Images.Media.DATA};
 //                CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);

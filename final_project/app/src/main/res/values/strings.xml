@@ -5,9 +5,9 @@
     <string name="choose">選擇檔案</string>
     <string name="file_name">未選擇任何檔案</string>
     <string name="start">開始分析</string>
-    <string name="title_activity_main2">「我是大明星!」</string>
+    <string name="title_activity_main2"></string>
     <string name="select">請點選其中一個人臉進行分析</string>
-    <string name="title_activity_main3">「我是大明星!」</string>
+    <string name="title_activity_main3"></string>
     <string name="ratio">Ratio</string>
     <string name="name">Name</string>
 
