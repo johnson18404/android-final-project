@@ -36,12 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="96dp"
-
             android:layout_marginTop="8dp"
-
             android:layout_marginBottom="8dp"
             android:background="@drawable/choose_btn"
             android:text="@string/choose"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/file_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/intro"
@@ -95,6 +94,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start" />
+
+        <ImageButton
+            android:id="@+id/camera_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:background="@drawable/camera_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.341"
+            app:layout_constraintStart_toEndOf="@+id/choose_file"
+            app:layout_constraintTop_toBottomOf="@+id/intro"
+            app:srcCompat="@drawable/ic_camera_alt_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

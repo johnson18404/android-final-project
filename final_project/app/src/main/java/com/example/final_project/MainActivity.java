@@ -1,12 +1,14 @@
 package com.example.final_project;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,11 +22,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.content.CursorLoader;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+
+import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +62,36 @@ public class MainActivity extends AppCompatActivity {
 
                                       }
                                   });
+
+        ImageButton camera = findViewById(R.id.camera_btn);
+        camera.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v){
+//                ContentValues value = new ContentValues();
+//                value.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+//                Uri uri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                        value);
+//                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri.getPath());
+//                startActivityForResult(intent, CAMERA);
+
+
+//                Intent intent = new Intent(
+//                        android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                File tmpFile = new File(
+//                        Environment.getExternalStorageDirectory(), "image.jpg");
+//                Uri outputFileUri = Uri.fromFile(tmpFile);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//                startActivityForResult(intent, CAMERA);
+
+
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivity(intent);
+
+            }
+
+        });
 
 
 
