@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView intro = (TextView) findViewById(R.id.intro);
         SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
-        spannable.setSpan(new AbsoluteSizeSpan(40), 16, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new AbsoluteSizeSpan(40), 18, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         intro.setText(spannable);
 
@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
                                       }
                                   });
 
-        ImageButton camera = findViewById(R.id.camera_btn);
-        camera.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v){
+//        ImageButton camera = findViewById(R.id.camera_btn);
+//        camera.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v){
 //                ContentValues value = new ContentValues();
 //                value.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 //                Uri uri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
 //                startActivityForResult(intent, CAMERA);
 
 
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivity(intent);
-
-            }
-
-        });
+//                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                startActivity(intent);
+//
+//            }
+//
+//        });
 
 
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             //取得圖檔的路徑位置
             Uri uri = data.getData();
             //寫log
-            Log.e("uri", uri.toString());
+//            Log.e("uri", uri.toString());
             //抽象資料的接口
             ContentResolver cr = this.getContentResolver();
             try {
@@ -148,47 +148,23 @@ public class MainActivity extends AppCompatActivity {
                 // 將Bitmap設定到ImageView
                 imageView.setImageBitmap(bitmap);
 
-                TextView mtext = findViewById(R.id.file_name);
+//                TextView mtext = findViewById(R.id.file_name);
 
-                String path;
-                int find;
+//                String path;
+//                int find;
+//
+//                find = uri.getPath().lastIndexOf('/');
+//                path = uri.getPath().substring(find+1,uri.getPath().length());
+//                Log.d("path", path);
 
-                find = uri.getPath().lastIndexOf('/');
-                path = uri.getPath().substring(find+1,uri.getPath().length());
-                Log.d("path", path);
+//                mtext.setText(path);
 
-//                String path = "圖片路徑";
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inJustDecodeBounds = true;
-//                BitmapFactory.decodeFile(path, options);
-//                String type = options.outMimeType;
-//                Log.d("image type -> ", type.toString());
-                 mtext.setText(path);
 
-//                String[] proj = {MediaStore.Images.Media.DATA};
-//                CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
-//                Cursor cursor = loader.loadInBackground();
-//                if (cursor != null) {
-//                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                    cursor.moveToFirst();
-//
-//                    String test = cursor.getString(column_index);
-//
-////                    Log.d("path222", test.toString());
-//
-//
-//
-//                }
-//                cursor.close();
-
-//                Log.d("000",bitmap)
             } catch (FileNotFoundException e) {
                 Log.e("Exception", e.getMessage(),e);
             }
 
-//            //取得圖片控制項ImageView
-//            ImageView imageView = (ImageView) findViewById(R.id.choose_img);
-//            imageView.setImageURI(uri);
+
 
         }
         super.onActivityResult(requestCode, resultCode, data);
