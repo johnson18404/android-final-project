@@ -27,7 +27,7 @@ public class Main2Activity extends AppCompatActivity {
 
 //    private ListView lv1;
 
-    private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
+    private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u1};
 
 
 
