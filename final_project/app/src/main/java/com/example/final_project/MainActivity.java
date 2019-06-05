@@ -46,6 +46,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import id.zelory.compressor.Compressor;
+
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,12 +61,19 @@ public class MainActivity extends AppCompatActivity {
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private ImageView actualImageView;
+    private File actualImage;
+    private File compressedImage;
+
+    private ImageView thumbImageView;
+
+    Bitmap compressedImageBitmap;
+
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
+            if (status == LoaderCallbackInterface.SUCCESS) {
                     Log.d(TAG, "OpenCV loaded successfully");
 
                     // after loaded
@@ -102,13 +111,10 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Failed to load cascade. Exception thrown: " + e);
                     }
 
-
                     // mOpenCvCameraView.enableView();
-                } break;
-                default:
-                {
-                    super.onManagerConnected(status);
-                } break;
+            }
+            else {
+                super.onManagerConnected(status);
             }
         }
     };
@@ -133,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        // setup UI component
+        thumbImageView = findViewById(R.id.choose_img);
 
         TextView intro = (TextView) findViewById(R.id.intro);
         SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
@@ -224,42 +233,72 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //當使用者按下確定後
-        if (resultCode == RESULT_OK) {
-            //取得圖檔的路徑位置
-            Uri uri = data.getData();
-            //寫log
-//            Log.e("uri", uri.toString());
-            //抽象資料的接口
-            ContentResolver cr = this.getContentResolver();
-            try {
-                //由抽象資料接口轉換圖檔路徑為Bitmap
-                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-                //取得圖片控制項ImageView
-                ImageView imageView = (ImageView) findViewById(R.id.choose_img);
-                // 將Bitmap設定到ImageView
-                imageView.setImageBitmap(bitmap);
-
-//                TextView mtext = findViewById(R.id.file_name);
-
-//                String path;
-//                int find;
+//        //當使用者按下確定後
+//        if (resultCode == RESULT_OK) {
+//            //取得圖檔的路徑位置
+//            Uri uri = data.getData();
+//            //寫log
+//            // Log.d(TAG, uri.toString());
+//            //抽象資料的接口
+//            ContentResolver cr = this.getContentResolver();
+//            try {
+//                //由抽象資料接口轉換圖檔路徑為Bitmap
+//                // Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+//                // compressedImageBitmap = new Compressor(this).compressToBitmap(actualImageFile);
+//                // Bitmap bitmap = new Compressor(this).compressToBitmap(new File(uri.toString()));
 //
-//                find = uri.getPath().lastIndexOf('/');
-//                path = uri.getPath().substring(find+1,uri.getPath().length());
-//                Log.d("path", path);
-
-//                mtext.setText(path);
-
-
-            } catch (FileNotFoundException e) {
-                Log.e("Exception", e.getMessage(),e);
-            }
-
-
-
-        }
+//                //取得圖片控制項ImageView
+//                ImageView imageView = (ImageView) findViewById(R.id.choose_img);
+//                // 將Bitmap設定到ImageView
+//                imageView.setImageBitmap(bitmap);
+//
+////                TextView mtext = findViewById(R.id.file_name);
+//
+////                String path;
+////                int find;
+////
+////                find = uri.getPath().lastIndexOf('/');
+////                path = uri.getPath().substring(find+1,uri.getPath().length());
+////                Log.d("path", path);
+//
+////                mtext.setText(path);
+//
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("Exception", e.getMessage(),e);
+//            }
+//
+//
+//
+//        }
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            if (data == null) {
+                // showError("Failed to open picture!");
+                return;
+            }
+            try {
+                File actualImageFile = FileUtil.from(this, data.getData());
+
+                compressedImageBitmap = new Compressor(this).compressToBitmap(actualImageFile);
+
+                thumbImageView.setImageBitmap(compressedImageBitmap);
+
+                // thumbImageView.setImageBitmap(BitmapFactory.decodeFile(actualImage.getAbsolutePath()));
+
+//                actualSizeTextView.setText(String.format("Size : %s", getReadableFileSize(actualImage.length())));
+//                clearImage();
+
+                // compress
+
+
+            } catch (IOException e) {
+//                showError("Failed to read picture data!");
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
