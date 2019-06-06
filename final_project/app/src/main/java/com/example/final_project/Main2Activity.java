@@ -53,11 +53,13 @@ public class Main2Activity extends AppCompatActivity {
         thumbImageView = findViewById(R.id.img_1);
 
         // intent receive data from MainActivity
-//        Intent intent = getIntent();
-//        Bitmap thumbImage = (Bitmap) intent.getParcelableExtra("thumb");
-//
-//        // update thumb in main2
-//        thumbImageView.setImageBitmap(thumbImage);
+        Intent intent = getIntent();
+        int facesNum = intent.getIntExtra("facesNum", -1);
+        Log.d("main2", "facesNum");
+        Log.d("facesNum", String.valueOf(facesNum));
+
+        // update thumb in main2
+        // thumbImageView.setImageBitmap(thumbImage);
 
 
 

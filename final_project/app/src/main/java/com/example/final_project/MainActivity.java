@@ -37,6 +37,7 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private CascadeClassifier mJavaDetector;
 
 
-    private float                  mRelativeFaceSize   = 0.2f;
+    private float                  mRelativeFaceSize   = 0.0002f;
     private int                    mAbsoluteFaceSize   = 0;
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -355,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             FileOutputStream stream = this.openFileOutput("thumb.jpg", Context.MODE_PRIVATE);
-            compressedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+            compressedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
 
             stream.close();
             // compressedImage.();
@@ -373,14 +374,15 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view) {
         Log.d(TAG, "btn start click");
 
+
+        int facesNum = Analyze();
+
         save_to_tmp();
 
         Intent intent = new Intent(this, Main2Activity.class);
         // newAct.setClass( this, Main2Activity.class );
         //intent.putExtra("thumb", compressedImageBitmap);
-
-
-
+        intent.putExtra("facesNum", facesNum);
 
 
         startActivity(intent);
@@ -390,6 +392,102 @@ public class MainActivity extends AppCompatActivity {
         compressedImageBitmap.recycle();
 //        this.finish();
 
+    }
+
+    private int Analyze() {
+        Log.d("main", "Analyze()");
+
+        // load image
+        // Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.t2);
+        mRgba = new Mat();
+        mGray = new Mat();
+        Utils.bitmapToMat(compressedImageBitmap, mRgba);
+        // Imgcodecs.imwrite(this.getFilesDir()+"/mRgba.jpg", mRgba);
+        Imgproc.cvtColor(mRgba, mGray, Imgproc.COLOR_BGR2GRAY);
+
+        int height = mGray.rows(), width = mGray.cols();
+
+        // some pre-process, calc min face range.
+        if (mAbsoluteFaceSize == 0) {
+            if (Math.round(height * mRelativeFaceSize) > 0) {
+                mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
+            }
+            // mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
+        }
+
+
+
+        // face detect
+        MatOfRect faces = new MatOfRect();
+
+        if (mJavaDetector != null)
+            mJavaDetector.detectMultiScale(mGray, faces, 1.1, 2, 2, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
+                    new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
+        else {
+            Log.d(TAG, "Detection method is not selected!");
+        }
+
+
+        float expandRatio = 0.3f;
+
+        // get result
+        Rect[] facesArray = faces.toArray();
+        Log.d(TAG, "detect finish. get: ");
+        Log.d(TAG, String.valueOf(facesArray.length));
+
+        for (int i = 0; i < facesArray.length; i++) {
+
+            // Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
+            Point a = facesArray[i].tl();
+            Point b = facesArray[i].br();
+
+            Log.d(TAG, String.valueOf(a.x) + "\t" + String.valueOf(a.y));
+            Log.d(TAG, String.valueOf(b.x) + "\t" + String.valueOf(b.y));
+
+            Rect rect = facesArray[i];
+            // Rect rectCrop = new Rect(rect.x, rect.y, rect.width, rect.height);
+
+            int dx = Math.round(rect.width * expandRatio);
+            int dy = Math.round(rect.height * expandRatio);
+            int x = rect.x - dx;;
+            if (x < 0) x = 0;
+            if (x >= width) x = width-1;
+            int y = rect.y - dy;;
+            if (y < 0) y = 0;
+            if (y >= height) y = height-1;
+            int w = Math.round(rect.width + dx * 2);
+            if (x + w >= width) w = width - x - 1;
+            int h = Math.round(rect.height + dy * 2);
+            if (y + h >= height) h = height - y - 1;
+
+            Log.d("main2", "width, height");
+            Log.d("main2", String.valueOf(w)+"_____"+String.valueOf(h));
+
+            Rect rectCrop = new Rect(x, y, w, h);
+
+            Mat image_roi = new Mat(mRgba, rectCrop); // BGR
+
+
+            Mat image_roi_rgb = new Mat();;
+            Imgproc.cvtColor(image_roi, image_roi_rgb, Imgproc.COLOR_BGR2RGB);
+
+            Mat image_roi_rgb_resize = new Mat();
+            Imgproc.resize(image_roi_rgb, image_roi_rgb_resize, new Size(160, 160));
+            Imgcodecs.imwrite(this.getFilesDir()+"/"+String.valueOf(i)+".jpg", image_roi_rgb_resize);
+
+            image_roi_rgb.release();
+            image_roi.release();
+        }
+
+
+
+
+
+        // release
+        mRgba.release();
+        mGray.release();
+
+        return facesArray.length;
     }
 
     private void ShowError(String msg) {
