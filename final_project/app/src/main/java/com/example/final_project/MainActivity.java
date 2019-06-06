@@ -51,6 +51,12 @@ import id.zelory.compressor.Compressor;
 import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class MainActivity extends AppCompatActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static int CAMERA_REQUEST_CODE = 1;
+    private static int GALLERY_REQUEST_CODE = 2;
+    private static int CROP_REQUEST_CODE = 3;
+
+
     private final String TAG = "main";
     private Mat mRgba;
     private Mat mGray;
@@ -150,19 +156,19 @@ public class MainActivity extends AppCompatActivity {
         intro.setText(spannable);
 
 
-        Button button = (Button)findViewById(R.id.choose_file);
-
-        button.setOnClickListener(new Button.OnClickListener(){
-
-                                      @Override
-                                      public void onClick(View v) {
-                                          Intent intent = new Intent();
-                                          intent.setType("image/*");
-                                          intent.setAction(Intent.ACTION_GET_CONTENT);
-                                          startActivityForResult(intent, 1);
-
-                                      }
-                                  });
+//        Button button = (Button)findViewById(R.id.choose_file);
+//
+//        button.setOnClickListener(new Button.OnClickListener(){
+//
+//                                      @Override
+//                                      public void onClick(View v) {
+//                                          Intent intent = new Intent();
+//                                          intent.setType("image/*");
+//                                          intent.setAction(Intent.ACTION_GET_CONTENT);
+//                                          startActivityForResult(intent, 1);
+//
+//                                      }
+//                                  });
 
 //        ImageButton camera = findViewById(R.id.camera_btn);
 //        camera.setOnClickListener(new View.OnClickListener()
@@ -272,8 +278,10 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //        }
+
+        //  v2
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == GALLERY_REQUEST_CODE) {
             if (data == null) {
                 // showError("Failed to open picture!");
                 return;
@@ -284,6 +292,8 @@ public class MainActivity extends AppCompatActivity {
                 compressedImageBitmap = new Compressor(this).compressToBitmap(actualImageFile);
 
                 thumbImageView.setImageBitmap(compressedImageBitmap);
+
+
 
                 // thumbImageView.setImageBitmap(BitmapFactory.decodeFile(actualImage.getAbsolutePath()));
 
@@ -299,19 +309,109 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            thumbImageView.setImageBitmap(imageBitmap);
+        }
+
+//          // v3
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//
+//            try {
+//                Uri uri = data.getData();
+//                String FilePath = getRealPathFromURI(uri);
+//
+//                // compress image
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inJustDecodeBounds = true;
+//
+//                // Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+//                // BitmapFactory.decodeFile(fileUri.getPath(), options);
+//                BitmapFactory.decodeFile(FilePath, options);
+//                int w = options.outWidth;
+//                int h = options.outHeight;
+//                int inSample = 1;
+//                if (w > 1000 || h > 1000) {
+//                    while (Math.max(w/inSample, h/inSample) > 1000) {
+//                        inSample *= 2;
+//                    }
+//                }
+//
+//                options.inJustDecodeBounds = false;
+//                options.inSampleSize = inSample;
+//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//                compressedImageBitmap = BitmapFactory.decodeFile(FilePath, options);
+//                thumbImageView.setImageBitmap(compressedImageBitmap);
+//            }
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
+    private void save_to_tmp() {
+
+        try {
+            FileOutputStream stream = this.openFileOutput("thumb.jpg", Context.MODE_PRIVATE);
+            compressedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+
+            stream.close();
+            // compressedImage.();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 //    public void choose_file(View view) {
 //    }
 
     public void start(View view) {
-        Intent newAct = new Intent();
-        newAct.setClass( this, Main2Activity.class );
+        Log.d(TAG, "btn start click");
 
-        startActivity(newAct);
+        save_to_tmp();
 
+        Intent intent = new Intent(this, Main2Activity.class);
+        // newAct.setClass( this, Main2Activity.class );
+        //intent.putExtra("thumb", compressedImageBitmap);
+
+
+
+
+
+        startActivity(intent);
+
+        // release memory
+        thumbImageView.setImageResource(android.R.color.transparent);
+        compressedImageBitmap.recycle();
 //        this.finish();
+
+    }
+
+    private void ShowError(String msg) {
+
+    }
+
+    public void btnChooseImage(View view) {
+        Log.d(TAG, "btnChooseImage click");
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        // startActivityForResult(intent.createChooser(intent, "Please select a image."), 100);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
+    public void btnCamera(View view) {
+        Log.d(TAG, "btnCamera click");
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 }

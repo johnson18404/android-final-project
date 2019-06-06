@@ -41,7 +41,8 @@
         android:text="@string/choose"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/intro" />
+        app:layout_constraintTop_toBottomOf="@+id/intro"
+        android:onClick="btnChooseImage" />
 
 
 
@@ -78,8 +79,6 @@
         app:layout_constraintTop_toBottomOf="@+id/start" />
 
 
-
-
     <ImageButton
         android:id="@+id/camera_btn"
         android:layout_width="100dp"
@@ -91,7 +90,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/intro"
-        app:srcCompat="@drawable/ic_camera_alt_black_24dp" />
+        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+        android:onClick="btnCamera"/>
 
     <TextView
         android:id="@+id/textView3"

@@ -1,6 +1,8 @@
 package com.example.final_project;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +33,10 @@ public class Main2Activity extends AppCompatActivity {
 
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u1};
 
+    // UI
     Toolbar toolbar;
     RecyclerView mList;
-
+    ImageView thumbImageView;
 
 
     @Override
@@ -42,7 +47,43 @@ public class Main2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        // setup UI
         mList = (RecyclerView) findViewById(R.id.list_view);
+        thumbImageView = findViewById(R.id.img_1);
+
+        // intent receive data from MainActivity
+//        Intent intent = getIntent();
+//        Bitmap thumbImage = (Bitmap) intent.getParcelableExtra("thumb");
+//
+//        // update thumb in main2
+//        thumbImageView.setImageBitmap(thumbImage);
+
+
+
+
+        File thumbFile = new File(this.getFilesDir(), "thumb.jpg");
+
+        Log.d("main2", thumbFile.getAbsolutePath());
+        Log.d("main2", String.valueOf(thumbFile.exists()));
+
+        if (thumbFile.exists()) {
+            Bitmap bmp = BitmapFactory.decodeFile(thumbFile.getAbsolutePath());
+
+            thumbImageView.setImageBitmap(bmp);
+
+            // bmp.recycle();
+        }
+
+//        try {
+//            FileInputStream is = this.openFileInput("thumb.jpg");
+//            bmp = BitmapFactory.decodeStream(is);
+//            is.close();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
 
 //        lv1 = (ListView) findViewById(R.id.list_view);
 //
