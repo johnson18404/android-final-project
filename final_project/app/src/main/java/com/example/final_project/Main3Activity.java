@@ -27,16 +27,21 @@ public class Main3Activity extends AppCompatActivity {
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
     private String[] name = {"小王1","小王2","小王3","小王4"};
     private double[] ratio = {18.24,15.26,11.48,10.55};
-    private SeekBar seekbar;
+
+    Toolbar toolbar;
+    SeekBar seekbar;
+    RecyclerView mList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mList = (RecyclerView) findViewById(R.id.result_view);
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         seekbar.setProgress(3);
@@ -73,7 +78,7 @@ public class Main3Activity extends AppCompatActivity {
             myDataset.add(imagesId[i] + "");
         }
         MyAdapter myAdapter = new MyAdapter(myDataset);
-        RecyclerView mList = (RecyclerView) findViewById(R.id.result_view);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mList.setLayoutManager(layoutManager);
@@ -114,7 +119,7 @@ public class Main3Activity extends AppCompatActivity {
 
             public ViewHolder(View v) {
                 super(v);
-//                mTextView = (TextView) v.findViewById(R.id.info_text);
+
                 name = (TextView) v.findViewById(R.id.text_name);
                 ratio = (TextView) v.findViewById(R.id.text_ratio);
                 img_small  = (ImageView)v.findViewById(R.id.img_small);

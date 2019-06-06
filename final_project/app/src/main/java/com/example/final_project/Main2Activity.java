@@ -29,15 +29,20 @@ public class Main2Activity extends AppCompatActivity {
 
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u1};
 
+    Toolbar toolbar;
+    RecyclerView mList;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mList = (RecyclerView) findViewById(R.id.list_view);
 
 //        lv1 = (ListView) findViewById(R.id.list_view);
 //
@@ -94,7 +99,6 @@ public class Main2Activity extends AppCompatActivity {
             myDataset.add(imagesId[i] + "");
         }
         MyAdapter myAdapter = new MyAdapter(myDataset);
-        RecyclerView mList = (RecyclerView) findViewById(R.id.list_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mList.setLayoutManager(layoutManager);
@@ -135,12 +139,12 @@ public class Main2Activity extends AppCompatActivity {
         private List<String> mData;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-//            public TextView mTextView;
+
             public ImageView face;
             public ImageButton imgbtn;
             public ViewHolder(View v) {
                 super(v);
-//                mTextView = (TextView) v.findViewById(R.id.info_text);
+
                 face  = (ImageView)v.findViewById(R.id.img);
                 imgbtn = (ImageButton)v.findViewById(R.id.imageButton);
             }
