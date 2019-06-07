@@ -1,6 +1,9 @@
 package com.example.final_project;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,19 +22,29 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main3Activity extends AppCompatActivity {
 
+    // global setup
+    private String cwd;
+
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
     private String[] name = {"小王1","小王2","小王3","小王4"};
     private double[] ratio = {18.24,15.26,11.48,10.55};
 
+    // UI
     Toolbar toolbar;
     SeekBar seekbar;
     RecyclerView mList;
+    ImageView thumbImageView;
+    ImageView faceImageView;
 
+
+    // data
+    int selectFace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +54,15 @@ public class Main3Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // init
+        cwd = this.getFilesDir().getAbsolutePath() + "/";
+        Log.d("cwd", cwd);
+
+        // setup UI
         mList = (RecyclerView) findViewById(R.id.result_view);
+
+        thumbImageView = findViewById(R.id.img1);
+        faceImageView = findViewById(R.id.img2);
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         seekbar.setProgress(3);
@@ -73,6 +94,33 @@ public class Main3Activity extends AppCompatActivity {
 //            }
 //        });
 
+
+        // intent receive data from MainActivity
+        Intent intent = getIntent();
+        selectFace = intent.getIntExtra("selectFace", -1);
+        Log.d("selectFace", String.valueOf(selectFace));
+
+
+
+        // data
+        // setup thumb
+        File thumbFile = new File(this.getFilesDir(), "thumb.jpg");
+        Log.d("thumbFile", thumbFile.getAbsolutePath());
+        if (thumbFile.exists()) {
+            Bitmap bmp = BitmapFactory.decodeFile(thumbFile.getAbsolutePath());
+            thumbImageView.setImageBitmap(bmp);
+        }
+
+        // setup selectFace
+        File faceFile = new File(this.getFilesDir(), String.valueOf(selectFace)+".jpg");
+        Log.d("selectFace", faceFile.getAbsolutePath());
+        if (faceFile.exists()) {
+            Bitmap bmp = BitmapFactory.decodeFile(faceFile.getAbsolutePath());
+            faceImageView.setImageBitmap(bmp);
+        }
+
+
+
         ArrayList<String> myDataset = new ArrayList<>();
         for(int i = 0; i < imagesId.length; i++){
             myDataset.add(imagesId[i] + "");
@@ -102,6 +150,13 @@ public class Main3Activity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        // update recyclerview
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

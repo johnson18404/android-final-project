@@ -29,6 +29,9 @@ import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
 
+    // global setup
+    private String cwd;
+
 //    private ListView lv1;
 
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u1};
@@ -38,6 +41,8 @@ public class Main2Activity extends AppCompatActivity {
     RecyclerView mList;
     ImageView thumbImageView;
 
+    // data
+    int facesNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class Main2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // init
+        cwd = this.getFilesDir().getAbsolutePath() + "/";
+        Log.d("cwd", cwd);
 
         // setup UI
         mList = (RecyclerView) findViewById(R.id.list_view);
@@ -54,7 +62,7 @@ public class Main2Activity extends AppCompatActivity {
 
         // intent receive data from MainActivity
         Intent intent = getIntent();
-        int facesNum = intent.getIntExtra("facesNum", -1);
+        facesNum = intent.getIntExtra("facesNum", -1);
         Log.d("main2", "facesNum");
         Log.d("facesNum", String.valueOf(facesNum));
 
@@ -67,7 +75,6 @@ public class Main2Activity extends AppCompatActivity {
         File thumbFile = new File(this.getFilesDir(), "thumb.jpg");
 
         Log.d("main2", thumbFile.getAbsolutePath());
-        Log.d("main2", String.valueOf(thumbFile.exists()));
 
         if (thumbFile.exists()) {
             Bitmap bmp = BitmapFactory.decodeFile(thumbFile.getAbsolutePath());
@@ -137,15 +144,14 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-        ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < imagesId.length; i++){
-            myDataset.add(imagesId[i] + "");
-        }
-        MyAdapter myAdapter = new MyAdapter(myDataset);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mList.setLayoutManager(layoutManager);
-        mList.setAdapter(myAdapter);
+//        ArrayList<String> myDataset = new ArrayList<>();
+//        for(int i = 0; i < imagesId.length; i++){
+//            myDataset.add(imagesId[i] + "");
+//
+//            myDataset.add(String.valueOf(i)+".jpg");
+//        }
+
+
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +162,26 @@ public class Main2Activity extends AppCompatActivity {
 //            }
 //        });
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("main2", "onResume");
+
+        ArrayList<String> myDataset = new ArrayList<>();
+        for(int i = 0; i < facesNum; i++){
+            myDataset.add(cwd+String.valueOf(i)+".jpg");
+        }
+
+        MyAdapter myAdapter = new MyAdapter(myDataset);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mList.setLayoutManager(layoutManager);
+        mList.setAdapter(myAdapter);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -207,17 +233,21 @@ public class Main2Activity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
 //            holder.mTextView.setText(mData.get(position));
 
-            holder.face.setImageResource(Integer.valueOf(mData.get(position)));
+            // holder.face.setImageResource(Integer.valueOf(mData.get(position)));
+            // wrap with try ..
+            Bitmap bmp = BitmapFactory.decodeFile(mData.get(position));
+            holder.face.setImageBitmap(bmp);
+
             holder.imgbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("123","888");
                     Intent newAct = new Intent();
                     newAct.setClass( Main2Activity.this, Main3Activity.class );
-
+                    newAct.putExtra("selectFace", position);
                     startActivity(newAct);
 
 //                    Main2Activity.this.finish();
