@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +24,19 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +44,7 @@ public class Main3Activity extends AppCompatActivity {
 
     // global setup
     private String cwd;
+    File filesDir;
 
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
     private String[] name = {"小王1","小王2","小王3","小王4"};
@@ -45,6 +60,129 @@ public class Main3Activity extends AppCompatActivity {
 
     // data
     int selectFace;
+    String res;
+
+
+    class Person {
+        public String name;
+        public int sex;
+        public double ratio;
+        public String url_face;
+        public String url_pic;
+
+        Person(String name, int sex, double ratio, String url_face, String url_pic) {
+            this.name = name;
+            this.sex = sex;
+            this.ratio = ratio;
+            this.url_face = url_face;
+            this.url_pic = url_pic;
+        }
+    }
+
+    private class GetResultFromServer extends AsyncTask<String, Integer, String> {
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            String attachmentFileName = params[0];
+
+            String attachmentName = "image";
+            String crlf = "\r\n";
+            String twoHyphens = "--";
+            String boundary =  "*****";
+            File FileToUpload = new File(filesDir, attachmentFileName);
+
+            HttpURLConnection conn = null;
+            InputStream responseStream = null;
+            BufferedReader responseStreamReader = null;
+            StringBuilder stringBuilder = new StringBuilder();
+            String response = "fail";
+
+            try {
+                conn = (HttpURLConnection) new URL("http://imt2019.iamss.cc:5000/lasso").openConnection();
+                conn.setUseCaches(false);
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                // conn.setRequestProperty("Connection", "close");
+                conn.setRequestProperty("Cache-Control", "no-cache");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+
+                // content wrapper
+                DataOutputStream request = new DataOutputStream(conn.getOutputStream());
+                request.writeBytes(twoHyphens + boundary + crlf);
+                request.writeBytes("Content-Disposition: form-data; name=\"" +
+                        attachmentName + "\";filename=\"" +
+                        attachmentFileName + "\"" + crlf);
+                request.writeBytes(crlf);
+
+                // write data
+                FileInputStream inputStreamToLogFile = new FileInputStream(FileToUpload);
+                int bytesRead;
+                byte[] dataBuffer = new byte[1024];
+                while((bytesRead = inputStreamToLogFile.read(dataBuffer)) != -1) {
+                    request.write(dataBuffer, 0, bytesRead);
+                }
+                request.flush();
+
+                // end content wrapper
+                request.writeBytes(crlf);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + crlf);
+
+                // flush output buffer
+                request.flush();
+                request.close();
+
+
+                // get response
+                responseStream = new BufferedInputStream(conn.getInputStream());
+                responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            // try parse as much as possible
+            int cnt = 0;
+            try {
+//                String line = "";
+//                while ((line = responseStreamReader.readLine()) != null) {
+//                    stringBuilder.append(line).append("\n");
+//                }
+
+                int ch;
+                while ((ch=responseStreamReader.read()) != -1) {
+                    Log.d("ch", String.valueOf((char) ch));
+                    stringBuilder.append((char) ch);
+
+                    cnt += 1;
+                }
+            }
+            catch (Exception e) {
+                Log.d("error", "ignore error");
+                e.printStackTrace();
+            }
+
+            Log.d("cnt", String.valueOf(cnt));
+
+            // concat parsing result
+            response = stringBuilder.toString();
+            Log.d("response", response);
+
+
+            // finally close conn
+            try {
+                responseStreamReader.close();
+                responseStream.close();
+                conn.disconnect();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return response;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +194,9 @@ public class Main3Activity extends AppCompatActivity {
 
         // init
         cwd = this.getFilesDir().getAbsolutePath() + "/";
+        filesDir = this.getFilesDir();
         Log.d("cwd", cwd);
+        res = "";
 
         // setup UI
         mList = (RecyclerView) findViewById(R.id.result_view);
@@ -71,6 +211,7 @@ public class Main3Activity extends AppCompatActivity {
                                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                                                    Log.d("now",Integer.toString(progress));
 
+                                                   Log.d("res", res);
                                                }
 
                                                @Override
@@ -119,6 +260,9 @@ public class Main3Activity extends AppCompatActivity {
             faceImageView.setImageBitmap(bmp);
         }
 
+
+        // get result
+        new GetResultFromServer().execute("2.jpg");
 
 
         ArrayList<String> myDataset = new ArrayList<>();
@@ -226,6 +370,11 @@ public class Main3Activity extends AppCompatActivity {
             return mData.size();
         }
     }
+
+
+
+
+
 
 }
 
