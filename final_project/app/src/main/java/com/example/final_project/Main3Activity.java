@@ -43,8 +43,25 @@ import java.util.List;
 public class Main3Activity extends AppCompatActivity {
 
     // global setup
+    final String thumb_face = "https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_alignface_0906/";
+    final String thumb_pic = "https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_pictures_0906/";
     private String cwd;
     File filesDir;
+    class Person {
+        public String name;
+        public int sex;
+        public double ratio;
+        public String url_face;
+        public String url_pic;
+
+        Person(String name, int sex, double ratio, String url_face, String url_pic) {
+            this.name = name;
+            this.sex = sex;
+            this.ratio = ratio;
+            this.url_face = url_face;
+            this.url_pic = url_pic;
+        }
+    }
 
     private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u4};
     private String[] name = {"小王1","小王2","小王3","小王4"};
@@ -61,23 +78,9 @@ public class Main3Activity extends AppCompatActivity {
     // data
     int selectFace;
     String res;
+    ArrayList<Person> list;
 
 
-    class Person {
-        public String name;
-        public int sex;
-        public double ratio;
-        public String url_face;
-        public String url_pic;
-
-        Person(String name, int sex, double ratio, String url_face, String url_pic) {
-            this.name = name;
-            this.sex = sex;
-            this.ratio = ratio;
-            this.url_face = url_face;
-            this.url_pic = url_pic;
-        }
-    }
 
     private class GetResultFromServer extends AsyncTask<String, Integer, String> {
 
@@ -96,7 +99,7 @@ public class Main3Activity extends AppCompatActivity {
             InputStream responseStream = null;
             BufferedReader responseStreamReader = null;
             StringBuilder stringBuilder = new StringBuilder();
-            String response = "fail";
+            String response = "";
 
             try {
                 conn = (HttpURLConnection) new URL("http://imt2019.iamss.cc:5000/lasso").openConnection();
@@ -139,6 +142,7 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 e.printStackTrace();
+                return "network_error";
             }
 
 
@@ -152,7 +156,7 @@ public class Main3Activity extends AppCompatActivity {
 
                 int ch;
                 while ((ch=responseStreamReader.read()) != -1) {
-                    Log.d("ch", String.valueOf((char) ch));
+                    // Log.d("ch", String.valueOf((char) ch));
                     stringBuilder.append((char) ch);
 
                     cnt += 1;
@@ -160,7 +164,7 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 Log.d("error", "ignore error");
-                e.printStackTrace();
+                // e.printStackTrace();
             }
 
             Log.d("cnt", String.valueOf(cnt));
@@ -178,10 +182,82 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 e.printStackTrace();
+                // ignore return
             }
 
             return response;
         }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s.equals("network_error")) {
+                Log.d("error", "network_error");
+                res = "error";
+                return;
+            }
+
+            res = s;
+            try {
+                JSONObject obj = new JSONObject(res);
+
+                int offset = obj.getInt("offset");
+                Log.d("offset", String.valueOf(offset));
+                if (offset == -1) {
+                    // can not found face
+                    Log.d("result fail", "can not find face.");
+                    return;
+                }
+
+                seekbar.setProgress(offset);
+
+                JSONArray arr = obj.getJSONArray("list");
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject t = arr.getJSONObject(i);
+
+                    String name = t.getString("name");
+                    int sex = t.getInt("sex");
+                    double ratio = t.getDouble("ratio");
+                    String url_face = thumb_face + t.getString("url_face");
+                    String url_pic = thumb_pic + t.getString("url_pic");
+
+                    list.add(new Person(name, sex, ratio, url_face, url_pic));
+
+                    Log.d("name", name);
+                    Log.d("url_pic", url_pic);
+                }
+
+            }
+            catch (Exception e) {
+                e.printStackTrace(); // JSON parsing error
+
+            }
+        }
+    }
+
+
+    private void ReArrange(int newoffset) {
+        int male = newoffset;
+        int female = 6 - newoffset;
+
+        ArrayList<Person> newList = new ArrayList<>();
+
+        for (Person p : list) {
+            if (male==0 && female==0) break;
+
+            if (male>0 && p.sex==1) {
+                newList.add(p);
+                male -= 1;
+            }
+            else if (female>0 && p.sex==0) {
+                newList.add(p);
+                female -= 1;
+            }
+
+        }
+
+
     }
 
     @Override
@@ -197,6 +273,7 @@ public class Main3Activity extends AppCompatActivity {
         filesDir = this.getFilesDir();
         Log.d("cwd", cwd);
         res = "";
+        list = new ArrayList<>();
 
         // setup UI
         mList = (RecyclerView) findViewById(R.id.result_view);
