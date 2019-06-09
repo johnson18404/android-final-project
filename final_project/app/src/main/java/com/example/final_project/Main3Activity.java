@@ -82,7 +82,7 @@ public class Main3Activity extends AppCompatActivity {
 
 
 
-    private class GetResultFromServer extends AsyncTask<String, Integer, String> {
+    private class GetResultFromServer extends AsyncTask<String, Void, String> {
 
 
         @Override
@@ -228,6 +228,9 @@ public class Main3Activity extends AppCompatActivity {
                     Log.d("url_pic", url_pic);
                 }
 
+                // update recycle list
+                ReArrange(offset);
+
             }
             catch (Exception e) {
                 e.printStackTrace(); // JSON parsing error
@@ -257,7 +260,8 @@ public class Main3Activity extends AppCompatActivity {
 
         }
 
-
+        MyAdapter myAdapter = new MyAdapter(newList);
+        mList.setAdapter(myAdapter);
     }
 
     @Override
@@ -286,9 +290,12 @@ public class Main3Activity extends AppCompatActivity {
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                                @Override
                                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
                                                    Log.d("now",Integer.toString(progress));
 
                                                    Log.d("res", res);
+
+                                                   ReArrange(progress);
                                                }
 
                                                @Override
@@ -342,16 +349,16 @@ public class Main3Activity extends AppCompatActivity {
         new GetResultFromServer().execute("2.jpg");
 
 
-        ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < imagesId.length; i++){
-            myDataset.add(imagesId[i] + "");
-        }
-        MyAdapter myAdapter = new MyAdapter(myDataset);
+//        ArrayList<String> myDataset = new ArrayList<>();
+//        for(int i = 0; i < imagesId.length; i++){
+//            myDataset.add(imagesId[i] + "");
+//        }
+//        MyAdapter myAdapter = new MyAdapter(myDataset);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mList.setLayoutManager(layoutManager);
-        mList.setAdapter(myAdapter);
+//        mList.setAdapter(myAdapter);
     }
 
     @Override
@@ -384,7 +391,7 @@ public class Main3Activity extends AppCompatActivity {
     }
 
     public class MyAdapter extends RecyclerView.Adapter<Main3Activity.MyAdapter.ViewHolder> {
-        private List<String> mData;
+        private List<Person> mData;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             //            public TextView mTextView;
@@ -404,7 +411,7 @@ public class Main3Activity extends AppCompatActivity {
             }
         }
 
-        public MyAdapter(List<String> data) {
+        public MyAdapter(List<Person> data) {
             mData = data;
         }
 
@@ -421,11 +428,18 @@ public class Main3Activity extends AppCompatActivity {
         public void onBindViewHolder(Main3Activity.MyAdapter.ViewHolder holder, int position) {
 //            holder.mTextView.setText(mData.get(position));
 
+            Person p = mData.get(position);
 
-            holder.name.setText(name[position]);
-            holder.ratio.setText(Double.toString(ratio[position]));
-            holder.img_small.setImageResource(Integer.valueOf(mData.get(position)));
-            holder.img_big.setImageResource(Integer.valueOf(mData.get(position)));
+            holder.name.setText(p.name);
+            holder.ratio.setText(Double.toString(p.ratio));
+
+            new DownloadImageTask((ImageView) holder.img_small).execute(p.url_face);
+            new DownloadImageTask((ImageView) holder.img_big).execute(p.url_pic);
+
+//            holder.name.setText(name[position]);
+//            holder.ratio.setText(Double.toString(ratio[position]));
+//            holder.img_small.setImageResource(Integer.valueOf(mData.get(position)));
+//            holder.img_big.setImageResource(Integer.valueOf(mData.get(position)));
 //            holder.imgbtn.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -450,8 +464,31 @@ public class Main3Activity extends AppCompatActivity {
 
 
 
+    // http://web.archive.org/web/20120802025411/http://developer.aiwgame.com/imageview-show-image-from-url-on-android-4-0.html
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
 
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 
 }
 
