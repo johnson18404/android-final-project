@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
         //  v2
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == GALLERY_REQUEST_CODE) {
+        if (resultCode == RESULT_OK && (requestCode == GALLERY_REQUEST_CODE)) {
             if (data == null) {
                 // showError("Failed to open picture!");
                 return;
@@ -313,6 +313,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            compressedImageBitmap = imageBitmap;
+
             thumbImageView.setImageBitmap(imageBitmap);
         }
 
