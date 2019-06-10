@@ -380,7 +380,18 @@ public class Main3Activity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.restart) {
+            Intent restart_intent = new Intent(this, MainActivity.class);
+            startActivity(restart_intent);
+            this.finish();
+            return true;
+        }
+        else if (id == R.id.action_settings) {
+
+            return true;
+        }
+        else if (id == R.id.about) {
+
             return true;
         }
 

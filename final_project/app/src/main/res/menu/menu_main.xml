@@ -2,9 +2,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.final_project.MainActivity">
+
+    <item
+        android:id="@+id/restart"
+        android:title="重新開啟"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="設定"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:title="關於"
+        app:showAsAction="never"/>
+
+
+
+
 </menu>
