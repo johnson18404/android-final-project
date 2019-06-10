@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -142,6 +143,7 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 e.printStackTrace();
+                ShowMsg("Network Error");
                 return "network_error";
             }
 
@@ -206,6 +208,7 @@ public class Main3Activity extends AppCompatActivity {
                 Log.d("offset", String.valueOf(offset));
                 if (offset == -1) {
                     // can not found face
+                    ShowMsg("Can not find any faces.");
                     Log.d("result fail", "can not find face.");
                     return;
                 }
@@ -234,7 +237,7 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 e.printStackTrace(); // JSON parsing error
-
+                ShowMsg("error: JSON parsing error.");
             }
         }
     }
@@ -492,6 +495,9 @@ public class Main3Activity extends AppCompatActivity {
         }
     }
 
+    private void ShowMsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
 }
 
 

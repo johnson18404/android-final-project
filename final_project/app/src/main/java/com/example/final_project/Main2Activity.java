@@ -28,13 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
-
     // global setup
     private String cwd;
-
-//    private ListView lv1;
-
-    private int[] imagesId={R.drawable.u1,R.drawable.u2,R.drawable.u3,R.drawable.u1};
 
     // UI
     Toolbar toolbar;
@@ -66,32 +61,14 @@ public class Main2Activity extends AppCompatActivity {
         Log.d("main2", "facesNum");
         Log.d("facesNum", String.valueOf(facesNum));
 
-        // update thumb in main2
-        // thumbImageView.setImageBitmap(thumbImage);
 
-
-
-
+        // setup thumb
         File thumbFile = new File(this.getFilesDir(), "thumb.jpg");
-
         Log.d("main2", thumbFile.getAbsolutePath());
-
         if (thumbFile.exists()) {
             Bitmap bmp = BitmapFactory.decodeFile(thumbFile.getAbsolutePath());
-
             thumbImageView.setImageBitmap(bmp);
-
-            // bmp.recycle();
         }
-
-//        try {
-//            FileInputStream is = this.openFileInput("thumb.jpg");
-//            bmp = BitmapFactory.decodeStream(is);
-//            is.close();
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
 
 //        lv1 = (ListView) findViewById(R.id.list_view);
@@ -167,7 +144,6 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.d("main2", "onResume");
 
         ArrayList<String> myDataset = new ArrayList<>();
@@ -253,8 +229,6 @@ public class Main2Activity extends AppCompatActivity {
 //                    Main2Activity.this.finish();
                 }
             });
-
-
         }
 
         @Override

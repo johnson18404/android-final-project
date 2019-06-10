@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.content.CursorLoader;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -241,46 +242,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        //當使用者按下確定後
-//        if (resultCode == RESULT_OK) {
-//            //取得圖檔的路徑位置
-//            Uri uri = data.getData();
-//            //寫log
-//            // Log.d(TAG, uri.toString());
-//            //抽象資料的接口
-//            ContentResolver cr = this.getContentResolver();
-//            try {
-//                //由抽象資料接口轉換圖檔路徑為Bitmap
-//                // Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-//                // compressedImageBitmap = new Compressor(this).compressToBitmap(actualImageFile);
-//                // Bitmap bitmap = new Compressor(this).compressToBitmap(new File(uri.toString()));
-//
-//                //取得圖片控制項ImageView
-//                ImageView imageView = (ImageView) findViewById(R.id.choose_img);
-//                // 將Bitmap設定到ImageView
-//                imageView.setImageBitmap(bitmap);
-//
-////                TextView mtext = findViewById(R.id.file_name);
-//
-////                String path;
-////                int find;
-////
-////                find = uri.getPath().lastIndexOf('/');
-////                path = uri.getPath().substring(find+1,uri.getPath().length());
-////                Log.d("path", path);
-//
-////                mtext.setText(path);
-//
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                Log.e("Exception", e.getMessage(),e);
-//            }
-//
-//
-//
-//        }
-
         //  v2
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (requestCode == GALLERY_REQUEST_CODE)) {
@@ -289,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             try {
-                // File actualImageFile = FileUtil.from(this, data.getData());
+
                 InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
                 File tempFile = new File(this.getFilesDir(), "tmp.jpg");
                 FileOutputStream out = new FileOutputStream(tempFile);
@@ -301,18 +262,8 @@ public class MainActivity extends AppCompatActivity {
 
                 thumbImageView.setImageBitmap(compressedImageBitmap);
 
-
-
-                // thumbImageView.setImageBitmap(BitmapFactory.decodeFile(actualImage.getAbsolutePath()));
-
-//                actualSizeTextView.setText(String.format("Size : %s", getReadableFileSize(actualImage.length())));
-//                clearImage();
-
-                // compress
-
-
             } catch (IOException e) {
-//                showError("Failed to read picture data!");
+                ShowMsg("Open picture fail !");
                 e.printStackTrace();
             }
         }
@@ -326,42 +277,9 @@ public class MainActivity extends AppCompatActivity {
             thumbImageView.setImageBitmap(imageBitmap);
         }
 
-//          // v3
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//
-//            try {
-//                Uri uri = data.getData();
-//                String FilePath = getRealPathFromURI(uri);
-//
-//                // compress image
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inJustDecodeBounds = true;
-//
-//                // Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-//                // BitmapFactory.decodeFile(fileUri.getPath(), options);
-//                BitmapFactory.decodeFile(FilePath, options);
-//                int w = options.outWidth;
-//                int h = options.outHeight;
-//                int inSample = 1;
-//                if (w > 1000 || h > 1000) {
-//                    while (Math.max(w/inSample, h/inSample) > 1000) {
-//                        inSample *= 2;
-//                    }
-//                }
-//
-//                options.inJustDecodeBounds = false;
-//                options.inSampleSize = inSample;
-//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                compressedImageBitmap = BitmapFactory.decodeFile(FilePath, options);
-//                thumbImageView.setImageBitmap(compressedImageBitmap);
-//            }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
+    // https://github.com/zetbaitsu
     private static final int EOF = -1;
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
     private static long copy(InputStream input, OutputStream output) throws IOException {
@@ -386,36 +304,34 @@ public class MainActivity extends AppCompatActivity {
             // compressedImage.();
         }
         catch (Exception e) {
+            ShowMsg("save to thumb error");
             e.printStackTrace();
         }
 
     }
 
-
-//    public void choose_file(View view) {
-//    }
-
     public void start(View view) {
         Log.d(TAG, "btn start click");
 
-
+        // openCV face detect
         int facesNum = Analyze();
+        if (facesNum==0) {
+            ShowMsg("Can not detect any faces.");
+            return;
+        }
 
+
+        // save current to thumb.jpg. this will be used in main2, main3 thumb.
         save_to_tmp();
 
+        // jump to activity2
         Intent intent = new Intent(this, Main2Activity.class);
-        // newAct.setClass( this, Main2Activity.class );
-        //intent.putExtra("thumb", compressedImageBitmap);
         intent.putExtra("facesNum", facesNum);
-
-
         startActivity(intent);
 
         // release memory
         thumbImageView.setImageResource(android.R.color.transparent);
         compressedImageBitmap.recycle();
-//        this.finish();
-
     }
 
     private int Analyze() {
@@ -440,7 +356,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         // face detect
         MatOfRect faces = new MatOfRect();
 
@@ -458,6 +373,8 @@ public class MainActivity extends AppCompatActivity {
         Rect[] facesArray = faces.toArray();
         Log.d(TAG, "detect finish. get: ");
         Log.d(TAG, String.valueOf(facesArray.length));
+
+        if (facesArray.length==0) return 0;
 
         for (int i = 0; i < facesArray.length; i++) {
 
@@ -504,9 +421,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
         // release
         mRgba.release();
         mGray.release();
@@ -514,9 +428,6 @@ public class MainActivity extends AppCompatActivity {
         return facesArray.length;
     }
 
-    private void ShowError(String msg) {
-
-    }
 
     public void btnChooseImage(View view) {
         Log.d(TAG, "btnChooseImage click");
@@ -535,5 +446,9 @@ public class MainActivity extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    private void ShowMsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
