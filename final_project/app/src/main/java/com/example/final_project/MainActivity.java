@@ -46,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import id.zelory.compressor.Compressor;
 
@@ -288,9 +289,15 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             try {
-                File actualImageFile = FileUtil.from(this, data.getData());
+                // File actualImageFile = FileUtil.from(this, data.getData());
+                InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
+                File tempFile = new File(this.getFilesDir(), "tmp.jpg");
+                FileOutputStream out = new FileOutputStream(tempFile);
+                copy(inputStream, out);
+                inputStream.close();
+                out.close();
 
-                compressedImageBitmap = new Compressor(this).compressToBitmap(actualImageFile);
+                compressedImageBitmap = new Compressor(this).compressToBitmap(tempFile);
 
                 thumbImageView.setImageBitmap(compressedImageBitmap);
 
@@ -354,6 +361,20 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }
     }
+
+    private static final int EOF = -1;
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
+    private static long copy(InputStream input, OutputStream output) throws IOException {
+        long count = 0;
+        int n;
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        while (EOF != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
+    }
+
 
     private void save_to_tmp() {
 
