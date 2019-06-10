@@ -6,10 +6,10 @@
     <string name="file_name">未選擇任何檔案</string>
     <string name="start">開始分析</string>
     <string name="title_activity_main2"></string>
-    <string name="select">請點選以下其中一個人臉進行分析</string>
+    <string name="select">請選一個人臉分析</string>
     <string name="title_activity_main3"></string>
     <string name="ratio">Ratio</string>
     <string name="name">Name</string>
-    <string name="seekbartext">可調整男女比例進行分析</string>
+    <string name="seekbartext">可調整男女顯示比例</string>
 
 </resources>

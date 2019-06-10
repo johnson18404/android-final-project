@@ -323,6 +323,7 @@ public class Main3Activity extends AppCompatActivity {
         // intent receive data from MainActivity
         Intent intent = getIntent();
         selectFace = intent.getIntExtra("selectFace", -1);
+        String selectFaceFile = String.valueOf(selectFace)+".jpg";
         Log.d("selectFace", String.valueOf(selectFace));
 
 
@@ -337,7 +338,7 @@ public class Main3Activity extends AppCompatActivity {
         }
 
         // setup selectFace
-        File faceFile = new File(this.getFilesDir(), String.valueOf(selectFace)+".jpg");
+        File faceFile = new File(this.getFilesDir(), selectFaceFile);
         Log.d("selectFace", faceFile.getAbsolutePath());
         if (faceFile.exists()) {
             Bitmap bmp = BitmapFactory.decodeFile(faceFile.getAbsolutePath());
@@ -346,7 +347,7 @@ public class Main3Activity extends AppCompatActivity {
 
 
         // get result
-        new GetResultFromServer().execute("2.jpg");
+        new GetResultFromServer().execute(selectFaceFile);
 
 
 //        ArrayList<String> myDataset = new ArrayList<>();
@@ -430,7 +431,8 @@ public class Main3Activity extends AppCompatActivity {
 
             Person p = mData.get(position);
 
-            holder.name.setText(p.name);
+            String name = "#"+String.valueOf(position+1)+" "+p.name;
+            holder.name.setText(name);
             holder.ratio.setText(Double.toString(p.ratio));
 
             new DownloadImageTask((ImageView) holder.img_small).execute(p.url_face);
