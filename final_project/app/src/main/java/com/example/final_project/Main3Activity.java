@@ -1,6 +1,7 @@
 package com.example.final_project;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -322,6 +324,14 @@ public class Main3Activity extends AppCompatActivity {
 //            }
 //        });
 
+        //setting preference value
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String server_str = sp.getString
+                (SettingsActivity.KEY_PREF_SERVER, "server 1");
+        Log.d("preference",server_str);
+        Toast.makeText(this,server_str,Toast.LENGTH_SHORT).show();
+
 
         // intent receive data from MainActivity
         Intent intent = getIntent();
@@ -393,6 +403,8 @@ public class Main3Activity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
 
             return true;
         }

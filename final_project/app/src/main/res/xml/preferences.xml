@@ -10,7 +10,8 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/face_ratio_title" />
+        android:title="@string/face_ratio_title"
+        android:icon="@drawable/ic_face_black_24dp"/>
 
     <ListPreference
         android:defaultValue="0.3"
@@ -19,7 +20,8 @@
         android:key="enlarge"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="選擇區域放大" />
+        android:title="@string/enlarge_title"
+        android:icon="@drawable/ic_zoom_in_black_24dp"/>
 
     <ListPreference
         android:defaultValue="server 1"
@@ -28,5 +30,6 @@
         android:key="server"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="Server" />
+        android:title="@string/server_title"
+        android:icon="@drawable/ic_computer_black_24dp"/>
 </PreferenceScreen>

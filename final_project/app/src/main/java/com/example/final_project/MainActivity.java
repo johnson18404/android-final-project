@@ -15,6 +15,9 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
@@ -162,24 +165,15 @@ public class MainActivity extends AppCompatActivity {
 //        intro.setText(spannable);
 
 
-
-//        SharedPreferences sp = PreferenceManager
-//                .getDefaultSharedPreferences(this);
-
-//        Boolean switchPref = sp.getBoolean
-//                (SettingsActivity.KEY_PREF_EXAMPLE_SWITCH, false);
-
-//        String marketPref = sp
-//                .getString("face_ratio", "0.0002");
-//
-//        displayToast(marketPref);
-
-//        Toast.makeText(this,marketPref,Toast.LENGTH_SHORT).show();
-
-
-//        PreferenceManager.setDefaultValues(this,
-//                R.xml.preferences, false);
-
+        //setting preference value
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String ratio_str = sp.getString
+                (SettingsActivity.KEY_PREF_RATIO, "0.0002");
+        String enlarge_str = sp.getString
+                (SettingsActivity.KEY_PREF_ENLARGE, "30%");
+        Log.d("preference",ratio_str + enlarge_str);
+        Toast.makeText(this,ratio_str + enlarge_str,Toast.LENGTH_SHORT).show();
 
 
 

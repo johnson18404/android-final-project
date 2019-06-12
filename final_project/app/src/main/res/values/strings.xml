@@ -17,6 +17,8 @@
     <string name="menu_restart">重新開啟</string>
     <string name="menu_setting">設定</string>
     <string name="menu_about">關於</string>
+    <string name="enlarge_title">選擇區域放大</string>
+    <string name="server_title">Server</string>
     <string-array name="enlarge_array">
         <item>0%</item>
         <item>30%</item>

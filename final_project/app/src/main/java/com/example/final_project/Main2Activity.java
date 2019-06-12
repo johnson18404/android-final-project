@@ -186,6 +186,8 @@ public class Main2Activity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
 
             return true;
         }

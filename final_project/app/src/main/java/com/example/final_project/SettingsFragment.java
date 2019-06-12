@@ -14,10 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.widget.Toast;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat {
-    private Preference.OnPreferenceChangeListener onPreferenceChange;
+//    private Preference.OnPreferenceChangeListener onPreferenceChange;
 
 
 //    private OnFragmentInteractionListener mListener;
@@ -51,17 +52,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceChange(Preference preference, Object o) {
                 if (preference.getKey().equals("face_ratio")){
                     String ratio_str = o.toString();
+                    sp.edit().putString("face_ratio", ratio_str).apply();
                     ratio.setSummary(ratio_str);
                     Log.d("888",ratio_str);
+
                 }
                 else if (preference.getKey().equals("enlarge")){
                     String enlarge_str = o.toString();
                     enlarge_str = enlarge_str + "%";
+                    sp.edit().putString("enlarge", enlarge_str).apply();
                     enlarge.setSummary(enlarge_str);
                     Log.d("888",enlarge_str);
                 }
                 else if (preference.getKey().equals("server")){
                     String server_str = o.toString();
+                    sp.edit().putString("server", server_str).apply();
                     server.setSummary(server_str);
                     Log.d("888",server_str);
                 }

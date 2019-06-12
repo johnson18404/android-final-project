@@ -15,4 +15,6 @@
     <string name="menu_restart">Restart</string>
     <string name="menu_setting">Settings</string>
     <string name="menu_about">About Us</string>
+    <string name="enlarge_title">Select area to enlarge</string>
+    <string name="server_title">Server</string>
 </resources>
