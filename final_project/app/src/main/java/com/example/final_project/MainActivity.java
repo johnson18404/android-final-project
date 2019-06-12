@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -159,6 +161,25 @@ public class MainActivity extends AppCompatActivity {
 
         intro.setText(spannable);
 
+//        SharedPreferences sp = PreferenceManager
+//                .getDefaultSharedPreferences(this);
+
+//        Boolean switchPref = sp.getBoolean
+//                (SettingsActivity.KEY_PREF_EXAMPLE_SWITCH, false);
+
+//        String marketPref = sp
+//                .getString("face_ratio", "0.0002");
+//
+//        displayToast(marketPref);
+
+//        Toast.makeText(this,marketPref,Toast.LENGTH_SHORT).show();
+
+
+//        PreferenceManager.setDefaultValues(this,
+//                R.xml.preferences, false);
+
+
+
 
 //        Button button = (Button)findViewById(R.id.choose_file);
 //
@@ -241,10 +262,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
 
             return true;
         }
         else if (id == R.id.about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
 
             return true;
         }

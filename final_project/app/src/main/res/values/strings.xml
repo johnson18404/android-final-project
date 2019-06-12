@@ -12,4 +12,32 @@
     <string name="name">Name</string>
     <string name="seekbartext">可調整男女顯示比例</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="face_ratio_title">人臉相對於整張照片比例</string>
+    <string-array name="enlarge_array">
+        <item>0%</item>
+        <item>30%</item>
+        <item>60%</item>
+        <item>90%</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="enlarge_value_array">
+        <item>0%</item>
+        <item>30%</item>
+        <item>60%</item>
+        <item>90%</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="server_array">
+        <item>server 1</item>
+        <item>server 2</item>
+    </string-array>
+
+    <string-array name="server_value_array">
+        <item>server 1</item>
+        <item>server 2</item>
+    </string-array>
 </resources>

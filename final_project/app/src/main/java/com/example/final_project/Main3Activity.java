@@ -387,6 +387,8 @@ public class Main3Activity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
 
             return true;
         }
