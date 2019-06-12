@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">\"You Have Star Face\"</string>
+    <string name="action_settings">Settings</string>
+    <string name="ratio">Ratio</string>
+    <string name="name">Name</string>
+    <string name="choose">Choose File</string>
+    <string name="start">Start</string>
+    <string name="title_activity_main2">Choose Face</string>
+    <string name="select">Please choose a face to analyze</string>
+    <string name="title_activity_main3">Analyze Result</string>
+    <string name="seekbar_text">You can change gender ratio</string>
+    <string name="face_ratio_title">The proportion of the face relative to the entire picture</string>
+    <string name="introduction">\"You Have Star Face\""\n""\n"Celebrity similarity analysis"\n""\n"This is a computer vision app that analyzes the famous people in the picture."\n""\n"Do you want to know which stars are like you?"\n""\n"Upload a picture of you and let us tell you!</string>
+    <string name="menu_restart">Restart</string>
+    <string name="menu_setting">Settings</string>
+    <string name="menu_about">About Us</string>
+</resources>

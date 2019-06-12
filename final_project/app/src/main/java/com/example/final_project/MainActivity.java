@@ -155,11 +155,13 @@ public class MainActivity extends AppCompatActivity {
         // setup UI component
         thumbImageView = findViewById(R.id.choose_img);
 
-        TextView intro = (TextView) findViewById(R.id.intro);
-        SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
-        spannable.setSpan(new AbsoluteSizeSpan(40), 18, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        TextView intro = (TextView) findViewById(R.id.intro);
+//        SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
+//        spannable.setSpan(new AbsoluteSizeSpan(40), 18, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        intro.setText(spannable);
+//        intro.setText(spannable);
+
+
 
 //        SharedPreferences sp = PreferenceManager
 //                .getDefaultSharedPreferences(this);

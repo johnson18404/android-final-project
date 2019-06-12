@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/intro"
-            android:layout_width="358dp"
+            android:layout_width="match_parent"
             android:layout_height="198dp"
             android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
@@ -32,12 +32,13 @@
             android:singleLine="false"
             android:text="@string/introduction"
             android:textColor="#703030"
-            android:textSize="20sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
 
     </android.support.constraint.ConstraintLayout>
 

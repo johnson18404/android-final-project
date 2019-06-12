@@ -5,17 +5,17 @@
 
     <item
         android:id="@+id/restart"
-        android:title="重新開啟"
+        android:title="@string/menu_restart"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"
-        android:title="設定"
+        android:title="@string/menu_setting"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/about"
-        android:title="關於"
+        android:title="@string/menu_about"
         app:showAsAction="never"/>
 
 

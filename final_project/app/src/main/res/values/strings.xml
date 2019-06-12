@@ -1,20 +1,22 @@
 <resources>
     <string name="app_name">「明星臉比一比」</string>
     <string name="action_settings">Settings</string>
-    <string name="introduction">"\n"「明星臉比一比」名人相似度分析"\n""\n"這是一個電腦視覺APP，\n可以分析照片中的人長的像哪些知名人物。"\n""\n"想知道自己長的像哪些大明星嗎？"\n""\n"上傳一張你的照片，讓我們告訴你吧！"\n"</string>
+    <string name="introduction">" 「明星臉比一比」名人相似度分析"\n""\n"這是一個電腦視覺APP， 可以分析照片中的人長的像哪些知名人物"\n""\n"想知道自己長的像哪些大明星嗎？"\n""\n"上傳一張你的照片，讓我們告訴你吧！"</string>
     <string name="choose">選擇檔案</string>
-    <string name="file_name">未選擇任何檔案</string>
     <string name="start">開始分析</string>
-    <string name="title_activity_main2"></string>
+    <string name="title_activity_main2">選擇人臉</string>
     <string name="select">請選一個人臉分析</string>
-    <string name="title_activity_main3"></string>
+    <string name="title_activity_main3">分析結果</string>
     <string name="ratio">Ratio</string>
     <string name="name">Name</string>
-    <string name="seekbartext">可調整男女顯示比例</string>
+    <string name="seekbar_text">可調整男女顯示比例</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
     <string name="face_ratio_title">人臉相對於整張照片比例</string>
+    <string name="menu_restart">重新開啟</string>
+    <string name="menu_setting">設定</string>
+    <string name="menu_about">關於</string>
     <string-array name="enlarge_array">
         <item>0%</item>
         <item>30%</item>
