@@ -145,6 +145,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+
+        //setting preference value
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String ratio_str = sp.getString
+                (SettingsActivity.KEY_PREF_RATIO, "0.0002");
+        String enlarge_str = sp.getString
+                (SettingsActivity.KEY_PREF_ENLARGE, "30%");
+        Log.d("preference",ratio_str + enlarge_str);
+        Toast.makeText(this,ratio_str + enlarge_str,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -158,11 +168,6 @@ public class MainActivity extends AppCompatActivity {
         // setup UI component
         thumbImageView = findViewById(R.id.choose_img);
 
-//        TextView intro = (TextView) findViewById(R.id.intro);
-//        SpannableStringBuilder spannable = new SpannableStringBuilder(intro.getText().toString());
-//        spannable.setSpan(new AbsoluteSizeSpan(40), 18, 85, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-//        intro.setText(spannable);
 
 
         //setting preference value

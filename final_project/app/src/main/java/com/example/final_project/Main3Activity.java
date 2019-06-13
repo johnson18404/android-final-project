@@ -270,6 +270,18 @@ public class Main3Activity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //setting preference value
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String server_str = sp.getString
+                (SettingsActivity.KEY_PREF_SERVER, "server 1");
+        Log.d("preference",server_str);
+        Toast.makeText(this,server_str,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);

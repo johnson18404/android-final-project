@@ -31,7 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
     }
 
 //    private void setupActionBar() {
@@ -47,6 +46,8 @@ public class SettingsActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             onBackPressed();
+//            finish();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
