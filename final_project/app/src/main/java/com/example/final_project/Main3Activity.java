@@ -46,8 +46,10 @@ import java.util.List;
 public class Main3Activity extends AppCompatActivity {
 
     // global setup
-    final String thumb_face = "https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_alignface_0906/";
-    final String thumb_pic = "https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_pictures_0906/";
+    private String thumb_face = null;
+    private String thumb_pic = null;
+    private String server = null;
+
     private String cwd;
     File filesDir;
     class Person {
@@ -105,7 +107,8 @@ public class Main3Activity extends AppCompatActivity {
             String response = "";
 
             try {
-                conn = (HttpURLConnection) new URL("http://imt2019.iamss.cc:5000/lasso").openConnection();
+                Log.d("doinbackground server", server);
+                conn = (HttpURLConnection) new URL(server).openConnection();
                 conn.setUseCaches(false);
                 conn.setDoOutput(true);
                 conn.setRequestMethod("POST");
@@ -145,7 +148,7 @@ public class Main3Activity extends AppCompatActivity {
             }
             catch (Exception e) {
                 e.printStackTrace();
-                ShowMsg("Network Error");
+                // ShowMsg("Network Error");
                 return "network_error";
             }
 
@@ -198,6 +201,7 @@ public class Main3Activity extends AppCompatActivity {
 
             if (s.equals("network_error")) {
                 Log.d("error", "network_error");
+                ShowMsg("Network Error");
                 res = "error";
                 return;
             }
@@ -272,13 +276,40 @@ public class Main3Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private void LoadConfig() {
+        // load server configs
+        String server1 = null;
+        String server2 = null;
+        try {
+            server1 = getResources().getString(R.string.server1);
+            server2 = getResources().getString(R.string.server2);
+            Log.d("server1", server1);
+
+            thumb_face = getResources().getString(R.string.thumb_face);
+            thumb_pic = getResources().getString(R.string.thumb_pic);
+            Log.d("thumb_face", thumb_face);
+        }
+        catch (Exception e) {
+            ShowMsg("無法讀取伺服器設定檔案，請聯絡程式開發者取得伺服器存取授權。");
+        }
+
         //setting preference value
         SharedPreferences sp = PreferenceManager
                 .getDefaultSharedPreferences(this);
-        String server_str = sp.getString
-                (SettingsActivity.KEY_PREF_SERVER, "server 1");
-        Log.d("preference",server_str);
-        Toast.makeText(this,server_str,Toast.LENGTH_SHORT).show();
+        String server_str = sp.getString(SettingsActivity.KEY_PREF_SERVER, "server 1");
+        try {
+            if (server_str.equals("server 1")) {
+                server = server1;
+            }
+            else if (server_str.equals("server 2")) {
+                server = server2;
+            }
+        }
+        catch (NullPointerException e) {
+            ShowMsg("set server url fail.");
+        }
     }
 
     @Override
@@ -295,7 +326,8 @@ public class Main3Activity extends AppCompatActivity {
         Log.d("cwd", cwd);
         res = "";
         list = new ArrayList<>();
-
+        LoadConfig();
+        
         // setup UI
         mList = (RecyclerView) findViewById(R.id.result_view);
 
@@ -337,12 +369,12 @@ public class Main3Activity extends AppCompatActivity {
 //        });
 
         //setting preference value
-        SharedPreferences sp = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        String server_str = sp.getString
-                (SettingsActivity.KEY_PREF_SERVER, "server 1");
-        Log.d("preference",server_str);
-        Toast.makeText(this,server_str,Toast.LENGTH_SHORT).show();
+//        SharedPreferences sp = PreferenceManager
+//                .getDefaultSharedPreferences(this);
+//        String server_str = sp.getString
+//                (SettingsActivity.KEY_PREF_SERVER, "server 1");
+//        Log.d("preference",server_str);
+//        Toast.makeText(this,server_str,Toast.LENGTH_SHORT).show();
 
 
         // intent receive data from MainActivity

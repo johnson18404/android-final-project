@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="thumb_face" translatable="false">https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_alignface_0906/</string>
+    <string name="thumb_pic" translatable="false">https://s3-ap-northeast-1.amazonaws.com/johnson18404-imtwebimages/public/imt_pictures_0906/</string>
+    <string name="server1" translatable="false">http://imt2019.iamss.cc:5000/lasso</string>
+    <string name="server2" translatable="false">http://140.116.245.105:1231/lasso</string>
+</resources>
