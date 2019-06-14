@@ -65,16 +65,16 @@ public class MainActivity extends AppCompatActivity {
     private static int GALLERY_REQUEST_CODE = 2;
     private static int CROP_REQUEST_CODE = 3;
 
-
     private final String TAG = "main";
     private Mat mRgba;
     private Mat mGray;
     private File mCascadeFile;
     private CascadeClassifier mJavaDetector;
 
-
+    // OpenCV parameter
     private float                  mRelativeFaceSize   = 0.0002f;
     private int                    mAbsoluteFaceSize   = 0;
+    private float expandRatio = 0.3f;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView actualImageView;
@@ -147,14 +147,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //setting preference value
-        SharedPreferences sp = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        String ratio_str = sp.getString
-                (SettingsActivity.KEY_PREF_RATIO, "0.0002");
-        String enlarge_str = sp.getString
-                (SettingsActivity.KEY_PREF_ENLARGE, "30%");
-        Log.d("preference",ratio_str + enlarge_str);
-        Toast.makeText(this,ratio_str + enlarge_str,Toast.LENGTH_SHORT).show();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String ratio_str = sp.getString(SettingsActivity.KEY_PREF_RATIO, "0.0002");
+        try {
+            mRelativeFaceSize = Float.parseFloat(ratio_str);
+        }
+        catch (Exception e) {
+            ShowMsg("Invalid RelativeFaceSize. Using default value: 0.0002");
+        }
+
+        String enlarge_str = sp.getString(SettingsActivity.KEY_PREF_ENLARGE, "30%");
+        enlarge_str = enlarge_str.replace('%', ' ');
+        try {
+            expandRatio = Float.parseFloat(enlarge_str)/100.0f;
+        }
+        catch (Exception e) {
+            ShowMsg("Invalid expandRatio. Using default value: 30%");
+        }
+
+        // Log.d("preference",ratio_str + enlarge_str);
+        // Toast.makeText(this,ratio_str + enlarge_str,Toast.LENGTH_SHORT).show();
+        // Log.d("preference", enlarge_str);
+        // Toast.makeText(this, enlarge_str,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -170,15 +184,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //setting preference value
-        SharedPreferences sp = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        String ratio_str = sp.getString
-                (SettingsActivity.KEY_PREF_RATIO, "0.0002");
-        String enlarge_str = sp.getString
-                (SettingsActivity.KEY_PREF_ENLARGE, "30%");
-        Log.d("preference",ratio_str + enlarge_str);
-        Toast.makeText(this,ratio_str + enlarge_str,Toast.LENGTH_SHORT).show();
+//        //setting preference value
+//        SharedPreferences sp = PreferenceManager
+//                .getDefaultSharedPreferences(this);
+//        String ratio_str = sp.getString
+//                (SettingsActivity.KEY_PREF_RATIO, "0.0002");
+//
+//        try {
+//            mRelativeFaceSize = Float.parseFloat(ratio_str);
+//        }
+//        catch (Exception e) {
+//            ShowMsg("Invalid RelativeFaceSize. Using default value: 0.0002");
+//        }
+//
+//        String enlarge_str = sp.getString
+//                (SettingsActivity.KEY_PREF_ENLARGE, "30%");
+//        enlarge_str = enlarge_str.replace('%', ' ');
+
 
 
 
@@ -405,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        float expandRatio = 0.3f;
+        expandRatio = 0.3f;
 
         // get result
         Rect[] facesArray = faces.toArray();
