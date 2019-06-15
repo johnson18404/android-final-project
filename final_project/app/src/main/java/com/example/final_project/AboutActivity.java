@@ -22,70 +22,70 @@ import java.util.List;
 
 public class AboutActivity extends AppCompatActivity {
 
-    RecyclerView mList;
+//    RecyclerView mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        mList = (RecyclerView) findViewById(R.id.card_about);
-
-        ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < 1; i++){
-            myDataset.add("Title"+String.valueOf(i));
-        }
-
-//        List<Member> myDataset = new ArrayList<Member>();
-//        myDataset.add(new Member("title0","content0"));
-
-        AboutActivity.MyAdapter myAdapter = new MyAdapter(myDataset);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mList.setLayoutManager(layoutManager);
-        mList.setAdapter(myAdapter);
+//        mList = (RecyclerView) findViewById(R.id.card_about);
+//
+//        ArrayList<String> myDataset = new ArrayList<>();
+//        for(int i = 0; i < 1; i++){
+//            myDataset.add("Title"+String.valueOf(i));
+//        }
+//
+////        List<Member> myDataset = new ArrayList<Member>();
+////        myDataset.add(new Member("title0","content0"));
+//
+//        AboutActivity.MyAdapter myAdapter = new MyAdapter(myDataset);
+//        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        mList.setLayoutManager(layoutManager);
+//        mList.setAdapter(myAdapter);
 
     }
 
-    public class MyAdapter extends RecyclerView.Adapter<AboutActivity.MyAdapter.ViewHolder> {
-        private List<String> mData;
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView title;
-            public TextView content;
-
-
-            public ViewHolder(View v) {
-                super(v);
-                title = (TextView) v.findViewById(R.id.title);
-                content = (TextView) v.findViewById(R.id.content);
-
-            }
-        }
-
-        public MyAdapter(List<String> data) {
-            mData = data;
-        }
-
-        @Override
-        public AboutActivity.MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.about, parent, false);
-            AboutActivity.MyAdapter.ViewHolder vh = new ViewHolder(v);
-
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(AboutActivity.MyAdapter.ViewHolder holder, final int position) {
-//            holder.title.setText(mData.get(position));
-//            holder.content.setText(mData.get(position));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
-        }
-    }
+//    public class MyAdapter extends RecyclerView.Adapter<AboutActivity.MyAdapter.ViewHolder> {
+//        private List<String> mData;
+//
+//        public class ViewHolder extends RecyclerView.ViewHolder {
+//            public TextView title;
+//            public TextView content;
+//
+//
+//            public ViewHolder(View v) {
+//                super(v);
+//                title = (TextView) v.findViewById(R.id.title);
+//                content = (TextView) v.findViewById(R.id.content);
+//
+//            }
+//        }
+//
+//        public MyAdapter(List<String> data) {
+//            mData = data;
+//        }
+//
+//        @Override
+//        public AboutActivity.MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            View v = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.about, parent, false);
+//            AboutActivity.MyAdapter.ViewHolder vh = new ViewHolder(v);
+//
+//            return vh;
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(AboutActivity.MyAdapter.ViewHolder holder, final int position) {
+////            holder.title.setText(mData.get(position));
+////            holder.content.setText(mData.get(position));
+//
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return mData.size();
+//        }
+//    }
 }

@@ -327,7 +327,6 @@ public class Main3Activity extends AppCompatActivity {
         res = "";
         list = new ArrayList<>();
         LoadConfig();
-        
         // setup UI
         mList = (RecyclerView) findViewById(R.id.result_view);
 

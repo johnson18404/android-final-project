@@ -19,6 +19,13 @@
     <string name="menu_about">關於</string>
     <string name="enlarge_title">選擇區域放大</string>
     <string name="server_title">Server</string>
+    <string name="about_tttle1">about_tttle1</string>
+    <string name="about_text1">about_text1</string>
+    <string name="about_title2">about_title2</string>
+    <string name="about_text2">about_text2</string>
+    <string name="about_title3">about_title3</string>
+    <string name="about_text3">about_text3</string>
+    <string name="title_activity_about">關於</string>
     <string-array name="enlarge_array">
         <item>0%</item>
         <item>30%</item>
