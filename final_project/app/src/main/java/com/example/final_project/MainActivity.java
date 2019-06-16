@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView thumbImageView;
 
-    Bitmap compressedImageBitmap;
+    Bitmap compressedImageBitmap = null;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -182,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
         // setup UI component
         thumbImageView = findViewById(R.id.choose_img);
 
+        // init
+        compressedImageBitmap = null;
 
 
 //        //setting preference value
@@ -379,7 +381,10 @@ public class MainActivity extends AppCompatActivity {
             ShowMsg("Can not detect any faces.");
             return;
         }
-
+        else if (facesNum==-1) {
+            ShowMsg("Please choose a photo or take a picture first.");
+            return;
+        }
 
         // save current to thumb.jpg. this will be used in main2, main3 thumb.
         save_to_tmp();
@@ -392,10 +397,15 @@ public class MainActivity extends AppCompatActivity {
         // release memory
         thumbImageView.setImageResource(android.R.color.transparent);
         compressedImageBitmap.recycle();
+        compressedImageBitmap = null;
     }
 
     private int Analyze() {
         Log.d("main", "Analyze()");
+
+        if (compressedImageBitmap == null) {
+            return -1;
+        }
 
         // load image
         // Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.t2);
