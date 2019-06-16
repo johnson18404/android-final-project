@@ -4,8 +4,10 @@ Android應用程式開發 ANDROID APP DEVELOPMENT 期末專案
 測試 測試
 
 
-## APK
+## APK File
+APK file is located in `final_project\apks\your_have_star_face_v1.apk`.
 
+your can click [here to download.](final_project\apks\your_have_star_face_v1.apk) 
 
 
 ## list of tools, libraries and techniques 
@@ -54,3 +56,6 @@ Android應用程式開發 ANDROID APP DEVELOPMENT 期末專案
     * APP components behavior implementation
     * face detection on APP (Android OpenCV)
     * similar face image retrieval in backend analyze server (openface-landmark & our human face dataset)
+
+
+## for development
