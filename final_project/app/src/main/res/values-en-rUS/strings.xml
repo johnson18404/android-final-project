@@ -17,11 +17,15 @@
     <string name="menu_about">About Us</string>
     <string name="enlarge_title">Select area to enlarge</string>
     <string name="server_title">Server</string>
-    <string name="about_tttle1">about_title1</string>
-    <string name="about_text1">about_text1</string>
-    <string name="about_title2">about_title2</string>
-    <string name="about_text2">about_text2</string>
-    <string name="about_title3">about_title3</string>
-    <string name="about_text3">about_text3</string>
+    <string name="about_title2">How it works?</string>
+    <string name="about_text2">We collected a large number of famous people\'s pictures in advance, let the program learn the looks of these characters and train a model. Then when you upload an image to our server for analysis, it will be substituted into this model for analysis.</string>
+    <string name="about_title3">Privacy statement</string>
+    <string name="about_text3">In order to analyze photo similarity, we will upload the photos you selected to our server for analysis. Your photos will only be used as analytical similarity and will be deleted as soon as the analysis is complete. We do not store, sell, exchange or rent your photos to other groups or individuals, or for purposes other than those mentioned above.</string>
+    <string name="about_title4">Acknowledgement</string>
+    <string name="about_text4">Thanks to 王建瓏、黃凱泓、林祥慶、楊曜彰、賀先郁、葉俊廷、謝高丰、程信翰、莊英廷、顧詠涵 for assisting in the collection of pictures.</string>
     <string name="title_activity_about">About</string>
+    <string name="about_title5">About</string>
+    <string name="about_text5">\"You Have Star Face\" Celebrity similarity analysis Copyright © 2019 蔡文傑、王鈺云. All rights reserved</string>
+    <string name="about_title1">555</string>
+    <string name="about_text1">t5555</string>
 </resources>
