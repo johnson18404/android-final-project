@@ -321,6 +321,7 @@ public class Main3Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // init
+        ShowMsg("Analyzing... please wait for few seconds.");
         cwd = this.getFilesDir().getAbsolutePath() + "/";
         filesDir = this.getFilesDir();
         Log.d("cwd", cwd);
