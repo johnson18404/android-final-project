@@ -1,13 +1,16 @@
 # android-final-project
 Android應用程式開發 ANDROID APP DEVELOPMENT 期末專案
 
-測試 測試
+專案名稱：「明星臉比一比」名人相似度分析
 
+這是一個電腦視覺APP， 能夠分析照片中的人長的像哪些知名人物。使用者選擇一張照片之後，會先透過OpenCV在手機端簡略找出人臉出現的區域，之後會將找到的人臉上傳到我們搭建的伺服器上進行相似度分析。
 
-## APK File
-APK file is located in `final_project\apks\your_have_star_face_v1.apk`.
+詳細介紹與說明請參考 [app_intro.md](app_intro.md)
 
-your can click [here to download.](final_project\apks\your_have_star_face_v1.apk) 
+## Prebuild APK File
+Prebuild APK file is located in `final_project\apks\your_have_star_face_v1.apk`.
+
+your can click [here to download.](https://github.com/johnson18404/android-final-project/raw/master/final_project/apks/your_have_star_face_v1.apk) 
 
 
 ## list of tools, libraries and techniques 
@@ -38,7 +41,7 @@ your can click [here to download.](final_project\apks\your_have_star_face_v1.apk
     * OpenFace http://cmusatyalab.github.io/openface/
     * SPArse Modeling Software http://spams-devel.gforge.inria.fr/
     * scikit-learn https://scikit-learn.org/
-    * flask: http://flask.pocoo.org/
+    * flask http://flask.pocoo.org/
 
 
 ## Contributions of each team member
@@ -58,4 +61,5 @@ your can click [here to download.](final_project\apks\your_have_star_face_v1.apk
     * similar face image retrieval in backend analyze server (openface-landmark & our human face dataset)
 
 
-## for development
+## Notice for build apk by yourself
+The Server settings file is not included in this code. If you want to build the APK file yourself, please contact us.
