@@ -8,13 +8,16 @@ Android應用程式開發 ANDROID APP DEVELOPMENT 期末專案
 
 
 
-## list of tools, libraries,
+## list of tools, libraries and techniques 
 
-* We use about 70% codelabs in `Codelabs for Android Developer Fundamentals (V2)` https://developer.android.com/courses/fundamentals-training/toc-v2
+* We use most of codelabs in `Codelabs for Android Developer Fundamentals (V2)` https://developer.android.com/courses/fundamentals-training/toc-v2
     * 1.3: Text and scrolling views
     * 2.1: Activities and intents
+    * 2.2: Activity lifecycle and state
     * 3.3: Support libraries
+    * 4.2: Input controls
     * 4.3: Menus and pickers (options menu)
+    * 4.4: User navigation
     * 4.5: Recycleview
     * 5.1: Drawables, styles, and themes
     * 5.2: Cards and colors (CardView)
