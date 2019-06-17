@@ -14,6 +14,9 @@ Prebuild APK file is located in `final_project\apks\your_have_star_face_v1.apk`.
 your can click [here to download.](https://github.com/johnson18404/android-final-project/raw/master/final_project/apks/your_have_star_face_v1.apk) 
 
 
+## Presentation slides
+[slides](https://docs.google.com/presentation/d/1NdUjPPXyTI4isDLCC2znDM8wkyT4uHbJZsy9zbpWQz8/edit#slide=id.g5bf75c0000_0_517)
+
 ## list of tools, libraries and techniques 
 
 * We use most of codelabs in `Codelabs for Android Developer Fundamentals (V2)` https://developer.android.com/courses/fundamentals-training/toc-v2
