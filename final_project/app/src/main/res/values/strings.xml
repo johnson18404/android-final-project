@@ -27,7 +27,7 @@
     <string name="about_text3">為了分析照片相似度，我們會將您所選定的照片上傳到我們的伺服器進行分析，您的照片僅作為分析相似度使用，且分析完成之後即立即刪除。我們不會儲存、出售、交換或出租您的照片給其他團體或個人，或用於上述目的以外之其他用途。</string>
     <string name="title_activity_about">關於</string>
     <string name="about_title4">致謝</string>
-    <string name="about_text4">感謝 王建瓏、黃凱泓、林祥慶、楊曜彰、賀先郁、葉俊廷、謝高丰、程信翰、莊英廷、顧詠涵 協助圖片資料顧收集。</string>
+    <string name="about_text4">感謝 王建瓏、黃凱泓、林祥慶、楊曜彰、賀先郁、葉俊廷、謝高丰、程信翰、莊英廷、顧詠涵 協助圖片資料收集。</string>
     <string name="about_title5">關於</string>
     <string name="about_text5">「明星臉比一比」名人相似度分析"\n"Copyright © 2019 蔡文傑、王鈺云. All rights reserved</string>
 

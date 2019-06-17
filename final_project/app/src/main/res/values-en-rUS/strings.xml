@@ -22,7 +22,7 @@
     <string name="about_title3">Privacy statement</string>
     <string name="about_text3">In order to analyze photo similarity, we will upload the photos you selected to our server for analysis. Your photos will only be used as analytical similarity and will be deleted as soon as the analysis is complete. We do not store, sell, exchange or rent your photos to other groups or individuals, or for purposes other than those mentioned above.</string>
     <string name="about_title4">Acknowledgement</string>
-    <string name="about_text4">Thanks to 王建瓏、黃凱泓、林祥慶、楊曜彰、賀先郁、葉俊廷、謝高丰、程信翰、莊英廷、顧詠涵 for assisting in the collection of pictures.</string>
+    <string name="about_text4">Thanks to 王建瓏、黃凱泓、林祥慶、楊曜彰、賀先郁、葉俊廷、謝高丰、程信翰、莊英廷、顧詠涵 for collecting photo data.</string>
     <string name="title_activity_about">About</string>
     <string name="about_title5">About</string>
     <string name="about_text5">\"You Have Star Face\" Celebrity similarity analysis Copyright © 2019 蔡文傑、王鈺云. All rights reserved</string>
