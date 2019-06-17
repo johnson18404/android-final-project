@@ -505,7 +505,7 @@ public class Main3Activity extends AppCompatActivity {
 
             String name = "#"+String.valueOf(position+1)+" "+p.name;
             holder.name.setText(name);
-            holder.ratio.setText(Double.toString(p.ratio));
+            holder.ratio.setText(Double.toString(p.ratio) + " %");
 
             new DownloadImageTask((ImageView) holder.img_small).execute(p.url_face);
             new DownloadImageTask((ImageView) holder.img_big).execute(p.url_pic);
