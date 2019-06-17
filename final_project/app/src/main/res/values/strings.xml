@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">「明星臉比一比」</string>
+    <string name="app_name">明星臉比一比</string>
     <string name="action_settings">Settings</string>
     <string name="introduction">" 「明星臉比一比」名人相似度分析"\n""\n"這是一個電腦視覺APP， 可以分析照片中的人長的像哪些知名人物"\n""\n"想知道自己長的像哪些大明星嗎？"\n""\n"上傳一張你的照片，讓我們告訴你吧！"</string>
     <string name="choose">選擇檔案</string>
